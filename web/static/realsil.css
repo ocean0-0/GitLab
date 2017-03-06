@@ -1,0 +1,25 @@
+
+.footer{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	background-color: #fff;
+	bottom:0px;
+}
+
+.new {
+	display: inline-block;
+	padding: 2px;
+	text-align: center;
+	vertical-align: text-bottom;
+	font-size: 12px;
+	line-height: 100%;
+	font-style: normal;
+	color: #FFF;
+	overflow: hidden;
+	background-color: #F13F40;
+	position: relative;
+	right: -4px;
+	top: -4px;
+}
+

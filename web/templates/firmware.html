@@ -1,0 +1,53 @@
+$def with(firmware_test_info)
+<div class="row">
+  <div class="col-sm-10">
+    <h3>Firmware测试</h3>
+    <hr/>
+    <form method="POST" enctype="multipart/form-data" action="">
+      <h3>环境配置：</h3>
+      $:firmware_test_info.render()
+      <br /> 
+      <h3>测试文件:</h3>
+      <div class="col-sm-8">
+        <input id="firmware" type="file" name="myfile" style="display:none"/>
+        <input type="text" id="firmware_name" style="width:100%;" readonly="" placeholder=" Choose a '.bin' file to test." />
+      </div>
+      <div class="col-sm-2">
+        <input type="button" id="file_upload" class="btn btn-primary" value="Browser" disabled="disabled" />
+        <input id='submit_form' type="submit" value="upload"  style="display:none"/>
+      </div>
+      <br />
+      <br />
+      <br />  
+    </form>
+  </div>
+
+  <div class="col-sm-8"> 
+    <input type="button" id="btn_start_test"  class="btn btn-primary" value="开始测试" disabled='disabled'/>
+    <br />
+    <br />
+  </div>
+  <div class="col-sm-12"> 
+    <h3 id="firmware_test_stage">测试阶段:</h3>
+    <h4 id="ov9715">ov9715
+      <img id="ov9715_testing" src="../static/images/loading.gif" alt="testing..." style="display: none" />
+    </h4>
+    <p id="fw_test_board_ov9715">
+    </p>
+    <h4 id="ov9750">ov9750
+      <img id="ov9750_testing" src="../static/images/loading.gif" alt="testing..." style="display: none" />
+    </h4>
+    <p id="fw_test_board_ov9750">
+    </p>
+    <h3>测试结果:</h3>
+    <p id="firmware_log">
+    </p>
+    <br />
+    <br />
+    <br />
+    <hr />  
+  </div>
+</div>
+
+<script src="/static/scripts/firmware.js"></script>
+

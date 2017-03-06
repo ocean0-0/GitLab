@@ -1,0 +1,338 @@
+$def with (id, files, static_files)
+
+<h1>所有测试内容</h1>
+<ul>
+<li><a href="#today_compile">当日编译</a></li>
+<li><a href="#function_test">功能测试</a></li>
+<li><a href="#system_test">系统测试</a></li>
+<li><a href="#pressure_test">压力测试</a></li>
+<li><a href="#performance_test">性能测试</a></li>
+<li><a href="#api_test">api测试</a></li>
+<li><a href="#selenium_test">selenium测试</a></li>
+<li><a href="#firmware_test">firmware测试</a></li>
+
+</ul>
+
+
+<div>
+<p id="today_compile"></p>
+<h3>当日编译 </h3>
+<hr/>
+
+<h4> master </h4>
+
+$ master_compile_log =[]
+$for file in files:
+	$if file[0: len('compile')] == 'compile' and file[-11:] != 'release.log':
+		$if file[0: len('compile')] == 'compile' and file[-14:] != 'release1.1.log':
+			$if file[0: len('compile')] == 'compile' and file[-14:] != 'release1.0.log':
+				$if file[0: len('compile')] == 'compile' and file[-14:] != 'release1.2.log':
+				$ master_compile_log.append(file)
+
+$ master_compile_log.sort()
+$ master_compile_log.reverse()
+
+$for file in master_compile_log:
+	$if file[len('compile_'): len('compile_') + 4] == 'pass':
+		<p class="text-success"> <a href="/$id-$file">$file[len('compile_pass_'):]</a> pass</p>
+	$else:
+		<p class="text-danger"> <a href="/$id-$file">$file[len('compile_fail_'):] <i class="new">fail</i></a></p>
+
+<hr/>
+<h4> release1.0</h4>
+
+$ release_compile_log =[]
+$for file in files:
+	$if file[0: len('compile')] == 'compile' and file[-14:] == 'release1.0.log':
+		$ release_compile_log.append(file)
+
+$ release_compile_log.sort()
+$ release_compile_log.reverse()
+
+$for file in release_compile_log:
+	$if file[len('compile_'): len('compile_') + 4] == 'pass':
+		<p class="text-success"> <a href="/$id-$file">$file[len('compile_pass_'):]</a> pass</p>
+	$else:
+		<p class="text-danger"> <a href="/$id-$file">$file[len('compile_fail_'):] <i class="new">fail</i></a></p>
+
+<hr/>
+<h4> release1.1</h4>
+
+$ release_compile_log =[]
+$for file in files:
+	$if file[0: len('compile')] == 'compile' and file[-14:] == 'release1.1.log':
+		$ release_compile_log.append(file)
+
+$ release_compile_log.sort()
+$ release_compile_log.reverse()
+
+$for file in release_compile_log:
+	$if file[len('compile_'): len('compile_') + 4] == 'pass':
+		<p class="text-success"> <a href="/$id-$file">$file[len('compile_pass_'):]</a> pass</p>
+	$else:
+		<p class="text-danger"> <a href="/$id-$file">$file[len('compile_fail_'):] <i class="new">fail</i></a></p>
+
+<hr/>
+<h4> release1.2</h4>
+
+$ release_compile_log =[]
+$for file in files:
+	$if file[0: len('compile')] == 'compile' and file[-14:] == 'release1.2.log':
+		$ release_compile_log.append(file)
+
+$ release_compile_log.sort()
+$ release_compile_log.reverse()
+
+$for file in release_compile_log:
+	$if file[len('compile_'): len('compile_') + 4] == 'pass':
+		<p class="text-success"> <a href="/$id-$file">$file[len('compile_pass_'):]</a> pass</p>
+	$else:
+		<p class="text-danger"> <a href="/$id-$file">$file[len('compile_fail_'):] <i class="new">fail</i></a></p>
+
+<h3>功能测试</h3>
+<hr/>
+<p id="function_test"></p>
+$ function_test={}
+$ function_key= ''
+
+$for file in files:
+	$if file[0: len('function')] == 'function' and file[len('function_pass_') : len('function_pass_') +2] != '0x':
+		$if file[len('function_'): len('function_') + 4] == 'pass':
+			<p class="text-success"> <a href="/$id-$file">$file[len('function_pass_'):]</a> pass</p>
+		$else:	
+			<p class="text-danger"> <a href="/$id-$file">$file[len('function_fail_'):] <i class="new">fail</i></a></p>
+$for file in files:
+	$if file[0: len('function')] == 'function' and file[len('function_pass_') : len('function_pass_') + 2] == '0x':
+		$ function_key = file[len('function_pass_0x'):len('function_pass_0x') +8]
+		$if not function_test.has_key(function_key):
+			$ function_test[function_key] = []
+
+		$ function_test[function_key].append(file)
+
+$for k in function_test:
+	$ function_test[k].sort()
+	$ function_test[k].reverse()
+
+$if len(function_test) != 0:
+	<div class="row">
+
+$for k in function_test:
+	<div class="col-md-4">
+	$code: var1 = int(k[0:2], 16)
+	$code: var2 = int(k[2:4], 16)
+	$code: var3 = int(k[4:6], 16)
+	$code: var4 = int(k[6:8], 16)
+	<h4>Board $var1.$var2.$var3.$var4</h4>
+	$ v= function_test[k]
+	$for file in v:
+		$if file[len('function_'): len('function_') + 4] == 'pass':
+			<p class="text-success"> <a href="/$id-$file">$file[len('function_pass_0x00000000_'):]</a> pass</p>
+		$else:
+			<p class="text-danger"> <a href="/$id-$file">$file[len('function_fail_0x00000000_'):] <i class="new">fail</i></a></p>
+	</div>
+
+$if len(function_test) != 0:
+	<br/>
+	</div>
+
+<h3>系统测试 </h3>
+<hr/>
+<p id="system_test"></p>
+$ system_test={}
+$ system_key= ''
+
+$for file in files:
+	$if file[0: len('system')] == 'system' and file[len('system_pass_') : len('system_pass_') + 2] != '0x':
+		$if file[len('system_'): len('system_') + 4] == 'pass':
+			<p class="text-success"> <a href="/$id-$file">$file[len('system_pass_'):]</a> pass</p>
+		$else:
+			<p class="text-danger"> <a href="/$id-$file">$file[len('system_fail_'):] <i class="new">fail</i></a></p>
+
+$for file in files:
+	$if file[0: len('system')] == 'system' and file[len('system_pass_') : len('system_pass_') + 2] == '0x':
+		$ system_key = file[len('system_pass_0x'):len('system_pass_0x') +8]
+		$if not system_test.has_key(system_key):
+			$ system_test[system_key] = []
+
+		$ system_test[system_key].append(file)
+
+$for k in system_test:
+	$ system_test[k].sort()
+	$ system_test[k].reverse()
+
+$if len(system_test) !=0:
+	<div class="row">
+
+$for k in system_test:
+	<div class="col-md-4">
+	$code: var1 = int(k[0:2], 16)
+	$code: var2 = int(k[2:4], 16)
+	$code: var3 = int(k[4:6], 16)
+	$code: var4 = int(k[6:8], 16)
+	<h4>Board $var1.$var2.$var3.$var4</h4>
+	$ v= system_test[k]
+	$for file in v:
+		$if file[len('system_'): len('system_') + 4] == 'pass':
+			<p class="text-success"> <a href="/$id-$file">$file[len('system_pass_0x00000000_'):]</a> pass</p>
+		$else:
+			<p class="text-danger"> <a href="/$id-$file">$file[len('system_fail_0x00000000_'):] <i class="new">fail</i></a></p>
+
+	</div>
+
+$if len(system_test) != 0:
+	<br/>
+	</div>
+
+<h3>压力测试</h3>
+<hr/>
+<p id="pressure_test"></p>
+$for file in files:
+	$if file[0: len('pressure')] == 'pressure':
+		<p> <a href="/$id-$file">$file[len('pressure_'):]</a></p>
+
+<div class="row">
+  <div class="span4">
+    <div id="pressure_record">
+	$for file in static_files:
+		$if file[-3] =='p' and file[-2] =='n' and file[-1] =='g':
+			<img src='static/$id/$file' style="width: 600px;height:400px;">
+			<hr/>
+
+	$for file in static_files:
+		$if file[-3] =='o' and file[-2] =='g' and file[-1] =='v':
+			<video src='static/$id/$file' controls="controls" style="width: 600px;height:400px;"></video>
+			<hr/>
+	</div>
+  </div>
+</div>
+
+
+<h3>性能测试 </h3>
+<hr/>
+<p id="performance_test"></p>
+$ performance_test={}
+$ performance_key= ''
+
+$for file in files:
+	$if file[0: len('performance')] == 'performance' and file[len('performance_') : len('performance_') +4] != 'pass':
+		<p> <a href="/$id-$file">$file[len('performance_'):]</a></p>
+
+$for file in files:
+	$if file[0: len('performance')] == 'performance' and file[len('performance_pass_') : len('performance_pass_') +2] == '0x':
+		$ performance_key = file[len('performance_pass_0x'):len('performance_pass_0x') +8]
+		$if not performance_test.has_key(performance_key):
+			$ performance_test[performance_key] = []
+
+		$ performance_test[performance_key].append(file)
+
+$for k in performance_test:
+	$ performance_test[k].sort()
+	$ performance_test[k].reverse()
+
+$if len(performance_test) != 0:
+	<div class="row">
+
+$for k in performance_test:
+	<div class="col-md-4">
+	$code: var1 = int(k[0:2], 16)
+	$code: var2 = int(k[2:4], 16)
+	$code: var3 = int(k[4:6], 16)
+	$code: var4 = int(k[6:8], 16)
+	<h4>Board $var1.$var2.$var3.$var4</h4>
+	$ v= performance_test[k]
+	$for file in v:
+		<p> <a href="/$id-$file">$file[len('performance_pass_0x00000000_'):]</a></p>
+	</div>
+
+$if len(performance_test) != 0:
+	<br/>
+	</div>
+
+
+<h3>api测试 </h3>
+<p id="API_test"></p>
+<hr/>
+
+<p id="api_test"></p>
+
+$ api_log =[]
+$for file in files:
+	$if file[0: len('api_')] == 'api_':
+		$if file[len('api_'): len('api_') + 7] == 'succeed' or file[len('api_'):len('api_') + 6] == 'failed':
+			$ api_log.append(file)
+
+$ api_log.sort()
+$ api_log.reverse()
+
+$for file in api_log:
+	$if file[len('api_'): len('api_') + 7] == 'succeed':
+		<p class="text-success"> <a href="/$id-$file">$file[len('api_succeed_'):]</a> pass</p>
+	$else:
+		<p class="text-danger"> <a href="/$id-$file">$file[len('api_failed_'):] <i class="new">fail</i></a></p>
+
+
+$ api_log =[]
+$for file in files:
+	$if file[0: len('api_')] == 'api_' and file[len('api_'): len('api_') + 7] != 'succeed' and file[len('api_'):len('api_') + 6] != 'failed':
+		$ api_log.append(file)
+
+$ api_log.sort()
+$ api_log.reverse()
+
+$for file in api_log:
+	<p> <a href="/$id-$file">$file[len('api_'):]</a></p>
+
+
+<h3>selenium测试 </h3>
+<hr/>
+<p id="selenium_test"></p>
+$for file in files:
+	$if file[0: len('selenium')] == 'selenium' and file[len('selenium_pass_') : len('selenium_pass_') + 2] != '0x':
+		$if file[len('selenium_'): len('selenium_') + 4] == 'pass':
+			<p class="text-success"> <a href="/$id-$file">$file[len('selenium_pass_'):]</a> pass</p>
+		$else:
+			<p class="text-danger"> <a href="/$id-$file">$file[len('selenium_fail_'):] <i class="new">fail</i></a></p>
+
+
+<h3>firmware测试 </h3>
+<hr/>
+<p id="firmware_test"></p>
+$ firmware_log = {}
+$ firmware_key = ''
+
+
+$for file in files:
+	$if file[0: len('firmware')] == 'firmware':
+		$ firmware_key = file[-len('ovxxxx.log'):-len('.log')]
+		$if not firmware_log.has_key(firmware_key):
+			$ firmware_log[firmware_key] = []
+
+		$ firmware_log[firmware_key].append(file)
+
+$for k in firmware_log:
+	$ firmware_log[k].sort()
+	$ firmware_log[k].reverse()
+
+$if len(firmware_log) != 0:
+	<div class="row">
+<p id="firmware-log"></p>
+$for k in firmware_log:
+	<div class="col-md-6">
+	<h4>Sensor $k</h4>
+	$ v= firmware_log[k]
+	
+	$for file in v:
+		$if file[len('firmware_'): len('firmware_') + 4] == 'pass':
+			<p class="text-success"> <a href="/$id-$file">$file[len('firmware_pass_'):]</a> pass</p>
+		$else:
+			<p class="text-danger"> <a href="/$id-$file">$file[len('firmware_fail_'):] <i class="new">fail</i></a></p>
+	</div>
+
+$if len(firmware_log) != 0:
+	<br/>
+	</div>
+
+
+
+
+

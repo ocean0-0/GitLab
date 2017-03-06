@@ -1,0 +1,16 @@
+Note:
+    Please modify arguments(ADDR,ip,port,usr,psd) to match your test environment  before test.
+    The test environment needs set up ftp.
+
+    Argument:
+        ip : socket and ftp ip
+        port : socket port
+        ADDR : socket addr
+        usr : ftp username
+        psd : tfp password
+        dir_path : file path
+        filename_fw : fw file name
+
+Usage:
+    1.run socket_server.py
+    2.run test code : python socket_server_demo.py,python socket_client_demo.py

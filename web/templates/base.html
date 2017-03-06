@@ -1,0 +1,58 @@
+$def with (page)
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Realsil IPCam Autotest Web</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css">  
+  <link rel="stylesheet" type="text/css" href="static/realsil.css">
+  <link rel="stylesheet" type="text/css" href="static/styles/basic.css">  
+  <script src="static/jquery.min.js"></script>
+  <script src="static/bootstrap/js/bootstrap.min.js"></script>
+  <script src="static/echarts.simple.min.js"></script>
+</head>
+<body>
+  <a href="#" id="toTop" title="回到顶部"></a>
+  <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">IPCam test</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul id="menu" class="nav navbar-nav">
+            <li><a href=/>Home</a></li>
+            <li><a href="/firmware">Firmware</a><li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
+      </div>
+  </nav>
+  <div id="wrap">
+      <div class="container">
+          $:page
+      </div>
+      <div id="push"> </div>
+  </div>
+<div id="scroll"></div>
+
+  <div id="footer">
+      <div class="container">
+          <p class="muted credit"> <a href="http://www.realsil.com.cn">瑞晟微电子(苏州)有限公司</a></p>
+      </div>
+  </div>
+
+  
+<!--
+<div class="footer"> Copyright www.realsil.com.cn</div>
+-->
+<script src="/static/scripts/global.js"></script>
+</body>
+</html>
+
