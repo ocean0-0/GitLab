@@ -1,0 +1,63 @@
+$def with (content)
+<style>
+.keyword
+{
+  color: red;
+  font-weight: bold;
+  background-color: yellow;
+}
+</style>
+
+<h1>测试细节</h1>
+<div id="thediv">$:content</div>
+
+<script type="text/javascript">
+function createExp(arry)
+{
+  var str="";
+  for(var i=0;i<arry.length;i++)
+  {
+    if(i!=arry.length-1)
+    {
+      str=str+arry[i]+"|";
+    }
+    else
+    {
+      str=str+arry[i];
+    }
+  }
+  return "("+str+")";
+}
+
+
+function hightKey(key,id)
+{
+  var arr=null;
+  var regStr=null;
+  var content=null;
+  var Reg=null;
+  var newContent=null;
+  var theObj=document.getElementById(id);
+  arr=key.split(/\s+/);
+  regStr=createExp(arr);
+  content=theObj.innerHTML;
+  Reg=new RegExp(regStr,"g");
+  return newContent=content.replace(Reg,"<span class=keyword>"+key+"</span>");
+}
+
+
+window.onload=function()
+{
+  var thediv=document.getElementById("thediv");
+  var key1="fail";
+  var key2="ERROR";
+  var itemContent = thediv.innerText;
+
+  if (itemContent.indexOf(key1, key2)>-1)
+  {
+    thediv.innerHTML=hightKey(key1,"thediv");
+    thediv.innerHTML=hightKey(key2,"thediv");
+  }
+
+}
+</script>

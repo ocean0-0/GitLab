@@ -1,0 +1,187 @@
+$def with (name)
+
+  <div class="row">
+   <div class="col-sm-4">
+      <h3>历史结果</h3>
+      <hr/>
+      <p><a href="/$name">$name</a></p>
+      <p><a href="/more">more...</a></p>
+    </div>
+  </div>
+
+  <h3>失败编译</h3>
+  <hr/>
+  <div id="main_fail_compile" style="width: 600px;height:400px;"></div>
+  <script type="text/javascript">
+        var myChart_fail_compile = echarts.init(document.getElementById('main_fail_compile'));
+
+        var option_fail_compile = {
+            title: {
+                text: '失败编译统计'
+            },
+            tooltip: {},
+            legend: {
+                data:['失败编译']
+            },
+            xAxis: {
+		data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '失败编译',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_fail_compile.setOption(option_fail_compile);
+
+	\$.get('fail_compile.json').done(function (data) {
+		var data = JSON.parse(data);
+		myChart_fail_compile.setOption({
+		xAxis: {
+			data: data.date
+			}
+		});
+		myChart_fail_compile.setOption({
+		series: [{
+				name: '失败编译',
+				data: data.data
+			}]
+		});
+	});
+
+  </script>
+
+
+  <h3>失败测试</h3>
+  <hr/>
+  <div id="main_fail_num" style="width: 600px;height:400px;"></div>
+  <script type="text/javascript">
+        var myChart_fail_num = echarts.init(document.getElementById('main_fail_num'));
+
+        var option_fail_num = {
+            title: {
+                text: '失败测试统计'
+            },
+            tooltip: {},
+            legend: {
+                data:['失败测试用例']
+            },
+            xAxis: {
+		data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '失败测试用例',
+                type: 'line',
+                data: []
+            }]
+        };
+        myChart_fail_num.setOption(option_fail_num);
+
+	\$.get('fail_data.json').done(function (data) {
+		var data = JSON.parse(data);
+		myChart_fail_num.setOption({
+		xAxis: {
+			data: data.date
+			}
+		});
+
+		myChart_fail_num.setOption({
+        		series: [{
+				name: '失败测试用例',
+				data: data.data
+        		}]
+    		});		
+	});
+
+  </script>
+
+  <h3>失败比例</h3>
+  <hr/>
+  <div id="main_fail_ratio" style="width: 600px;height:400px;"></div>
+  <script type="text/javascript">
+        var myChart_fail_ratio = echarts.init(document.getElementById('main_fail_ratio'));
+
+        var option_fail_ratio = {
+            title: {
+                text: '失败比例统计'
+            },
+            tooltip: {},
+            legend: {
+                data:['失败测试比例']
+            },
+            xAxis: {
+		data: []
+            },
+            yAxis: {},
+            series: [{
+                name: '失败测试比例',
+                type: 'bar',
+                data: []
+            }]
+        };
+        myChart_fail_ratio.setOption(option_fail_ratio);
+
+	\$.get('fail_ratio.json').done(function (data) {
+		var data = JSON.parse(data);
+		myChart_fail_ratio.setOption({
+		xAxis: {
+			data: data.date
+			}
+		});
+
+		myChart_fail_ratio.setOption({
+			series: [{
+				name: '失败测试比例',
+				data: data.data
+			}]
+		});
+	});
+
+  </script>
+
+  <h3>测试总数</h3>
+  <hr/>
+  <div id="main_total_test" style="width: 600px;height:400px;"></div>
+  <script type="text/javascript">
+        var myChart_total_test = echarts.init(document.getElementById('main_total_test'));
+
+        var option_total_test = {
+            title: {
+                text: '测试用例统计'
+            },
+            tooltip: {},
+            legend: {
+                data:['测试用例总数']
+            },
+            yAxis: {
+		data: []
+            },
+            xAxis: {},
+            series: [{
+                name: '测试用例总数',
+                type: 'bar',
+                data: []
+            }]
+        };
+        myChart_total_test.setOption(option_total_test);
+
+	\$.get('total_test.json').done(function (data) {
+		var data = JSON.parse(data);
+		myChart_total_test.setOption({
+		yAxis: {
+			data: data.date
+			}
+		});
+
+		myChart_total_test.setOption({
+			series: [{
+				name: '测试用例总数',
+				data: data.data
+			}]
+		});
+	});
+
+  </script>
+
